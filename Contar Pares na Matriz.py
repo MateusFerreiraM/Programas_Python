@@ -9,11 +9,11 @@ def ler_matriz(num_linhas, num_colunas):
         for j in range(num_colunas):
             while True:
                 try:
-                    valor = float(input(f"Valor da posição ({i+1}, {j+1}): "))
+                    valor = int(input(f"Valor da posição ({i+1}, {j+1}): "))
                     linha.append(valor)
                     break
                 except ValueError:
-                    print("Entrada inválida. Digite um número.")
+                    print("Entrada inválida. Digite um número inteiro.")
         matriz.append(linha)
     return matriz
 
@@ -24,19 +24,18 @@ def imprimir_matriz(matriz, titulo=""):
     if titulo:
         print(f"\n{titulo}:")
     for linha in matriz:
-        # Formata a impressão para ter 2 casas decimais e alinhamento
-        print(" ".join(f"{valor:7.2f}" for valor in linha))
+        print(" ".join(f"{valor:3d}" for valor in linha))
 
 def main():
     """
-    Função principal que calcula e imprime a matriz transposta.
+    Função principal que conta os números pares em uma matriz.
     """
-    print("--- Calculadora de Matriz Transposta ---")
+    print("--- Contador de Pares em Matriz ---")
 
     # Lê e valida as dimensões da matriz
     while True:
         try:
-            l, c = map(int, input("\nDigite o número de linhas e colunas: ").split())
+            l, c = map(int, input("\nDigite o número de linhas e colunas, separados por espaço: ").split())
             if l > 0 and c > 0:
                 break
             else:
@@ -44,13 +43,14 @@ def main():
         except ValueError:
             print("Entrada inválida. Digite dois números inteiros.")
 
-    matriz_original = ler_matriz(l, c)
+    matriz = ler_matriz(l, c)
     
-    # `zip(*matriz_original)` "desempacota" a matriz, transformando linhas em colunas
-    matriz_transposta = [list(linha) for linha in zip(*matriz_original)]
+    # Conta os números pares de forma concisa usando list comprehension
+    pares = sum(1 for linha in matriz for valor in linha if valor % 2 == 0)
+
+    imprimir_matriz(matriz, "Matriz")
     
-    imprimir_matriz(matriz_original, "Matriz Original")
-    imprimir_matriz(matriz_transposta, "Matriz Transposta")
+    print(f"\nA matriz possui {pares} números pares.")
 
 if __name__ == "__main__":
     main()

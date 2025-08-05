@@ -1,9 +1,9 @@
-def ler_matriz(num_linhas, num_colunas):
+def ler_matriz(titulo, num_linhas, num_colunas):
     """
     Lê os valores de uma matriz, com validação de entrada.
     """
     matriz = []
-    print("\nPreencha a matriz:")
+    print(f"\nPreencha a {titulo}:")
     for i in range(num_linhas):
         linha = []
         for j in range(num_colunas):
@@ -29,14 +29,14 @@ def imprimir_matriz(matriz, titulo=""):
 
 def main():
     """
-    Função principal que calcula e imprime a matriz transposta.
+    Função principal que soma duas matrizes.
     """
-    print("--- Calculadora de Matriz Transposta ---")
+    print("--- Calculadora de Soma de Matrizes ---")
 
-    # Lê e valida as dimensões da matriz
+    # Lê e valida as dimensões das matrizes
     while True:
         try:
-            l, c = map(int, input("\nDigite o número de linhas e colunas: ").split())
+            l, c = map(int, input("\nDigite o número de linhas e colunas das matrizes: ").split())
             if l > 0 and c > 0:
                 break
             else:
@@ -44,13 +44,24 @@ def main():
         except ValueError:
             print("Entrada inválida. Digite dois números inteiros.")
 
-    matriz_original = ler_matriz(l, c)
+    # A soma de matrizes requer que as dimensões sejam as mesmas
+    matriz_a = ler_matriz("Matriz A", l, c)
+    matriz_b = ler_matriz("Matriz B", l, c)
     
-    # `zip(*matriz_original)` "desempacota" a matriz, transformando linhas em colunas
-    matriz_transposta = [list(linha) for linha in zip(*matriz_original)]
+    # Prepara a matriz resultante com zeros
+    matriz_c = [[0 for _ in range(c)] for _ in range(l)]
     
-    imprimir_matriz(matriz_original, "Matriz Original")
-    imprimir_matriz(matriz_transposta, "Matriz Transposta")
+    # Realiza a soma de matrizes
+    for linha in range(l):
+        for coluna in range(c):
+            matriz_c[linha][coluna] = matriz_a[linha][coluna] + matriz_b[linha][coluna]
+
+    # Imprime o resultado de forma visualmente clara
+    imprimir_matriz(matriz_a, "Matriz A")
+    print("\n+")
+    imprimir_matriz(matriz_b, "Matriz B")
+    print("\n=")
+    imprimir_matriz(matriz_c, "Matriz C")
 
 if __name__ == "__main__":
     main()

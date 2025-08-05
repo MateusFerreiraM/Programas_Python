@@ -17,40 +17,50 @@ def ler_matriz(num_linhas, num_colunas):
         matriz.append(linha)
     return matriz
 
-def imprimir_matriz(matriz, titulo=""):
+def imprimir_matriz(matriz):
     """
     Imprime a matriz de forma formatada.
     """
-    if titulo:
-        print(f"\n{titulo}:")
     for linha in matriz:
         # Formata a impressão para ter 2 casas decimais e alinhamento
         print(" ".join(f"{valor:7.2f}" for valor in linha))
 
 def main():
     """
-    Função principal que calcula e imprime a matriz transposta.
+    Função principal que multiplica a diagonal principal de uma matriz.
     """
-    print("--- Calculadora de Matriz Transposta ---")
+    print("--- Multiplicador da Diagonal Principal ---")
 
     # Lê e valida as dimensões da matriz
     while True:
         try:
-            l, c = map(int, input("\nDigite o número de linhas e colunas: ").split())
-            if l > 0 and c > 0:
+            l, c = map(int, input("\nDigite o número de linhas e colunas (matriz quadrada): ").split())
+            if l == c and l > 0:
                 break
             else:
-                print("As dimensões devem ser números inteiros positivos.")
+                print("Por favor, digite dois números inteiros positivos iguais (matriz quadrada).")
         except ValueError:
             print("Entrada inválida. Digite dois números inteiros.")
 
-    matriz_original = ler_matriz(l, c)
+    matriz = ler_matriz(l, c)
     
-    # `zip(*matriz_original)` "desempacota" a matriz, transformando linhas em colunas
-    matriz_transposta = [list(linha) for linha in zip(*matriz_original)]
+    # Lê e valida o valor do multiplicador
+    while True:
+        try:
+            k = float(input("Qual valor você quer multiplicar a diagonal principal: "))
+            break
+        except ValueError:
+            print("Entrada inválida. Digite um número.")
     
-    imprimir_matriz(matriz_original, "Matriz Original")
-    imprimir_matriz(matriz_transposta, "Matriz Transposta")
+    print("\nAntes da Multiplicação:")
+    imprimir_matriz(matriz)
+
+    # Multiplica a diagonal principal
+    for i in range(l):
+        matriz[i][i] = matriz[i][i] * k
+
+    print("\nDepois da Multiplicação:")
+    imprimir_matriz(matriz)
 
 if __name__ == "__main__":
     main()

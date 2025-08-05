@@ -29,14 +29,17 @@ def imprimir_matriz(matriz, titulo=""):
 
 def main():
     """
-    Função principal que calcula e imprime a matriz transposta.
+    Função principal que ordena as linhas de uma matriz pela soma.
     """
-    print("--- Calculadora de Matriz Transposta ---")
+    print("--- Ordenador de Matriz por Soma ---")
+
+    print("\nO programa lê os valores de uma matriz e depois ordena as suas linhas")
+    print("com base na SOMA dos números de cada linha, da menor para a maior.")
 
     # Lê e valida as dimensões da matriz
     while True:
         try:
-            l, c = map(int, input("\nDigite o número de linhas e colunas: ").split())
+            l, c = map(int, input("\nDigite o número de linhas e colunas, separados por espaço: ").split())
             if l > 0 and c > 0:
                 break
             else:
@@ -44,13 +47,13 @@ def main():
         except ValueError:
             print("Entrada inválida. Digite dois números inteiros.")
 
-    matriz_original = ler_matriz(l, c)
+    matriz = ler_matriz(l, c)
     
-    # `zip(*matriz_original)` "desempacota" a matriz, transformando linhas em colunas
-    matriz_transposta = [list(linha) for linha in zip(*matriz_original)]
+    imprimir_matriz(matriz, "Original")
     
-    imprimir_matriz(matriz_original, "Matriz Original")
-    imprimir_matriz(matriz_transposta, "Matriz Transposta")
+    matriz.sort(key=sum)
+    
+    imprimir_matriz(matriz, "Ordenada")
 
 if __name__ == "__main__":
     main()
